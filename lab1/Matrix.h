@@ -19,7 +19,7 @@ class Matrix{
 
     friend std::ostream& operator<<(std::ostream &out, const Matrix& m);
 
-    Matrix paralleled_addition(const Matrix& m1);
+    Matrix parallel_adding(const Matrix& m1, int threads);
 };
 
 #endif

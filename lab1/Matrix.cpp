@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include <cstdlib>
+#include <thread>
 
 Matrix::Matrix(const int N, const int M){
   this->N = N;
@@ -54,4 +55,14 @@ std::ostream& operator<< (std::ostream &out, const Matrix& m){
 
 int** Matrix::getMatrix() const{
   return this->matrix;
+}
+
+Matrix Matrix::parallel_adding(const Matrix& m, int threads){
+  for(int i = 0; i < threads; i++){
+    for(int j = i; j < i+threads; j++){
+      for(int k = 0; k < m.M; k++){
+        this->matrix[j][k] += m.matrix[j][k];
+      }
+    }
+  }
 }
