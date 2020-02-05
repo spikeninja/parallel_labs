@@ -16,15 +16,17 @@ const int NUMBER_THREADS = 1;
 int main(){
   srand(time(NULL));
   
-  Matrix a(10,10);
-  Matrix b(10,10);
+  Matrix a(N,M), b(N, M);
+  // Sequential addition
+  chrono::time_point <chrono::system_clock> t1_seq = chrono::high_resolution_clock::now();
   Matrix c = a + b;
+  chrono::time_point <chrono::system_clock> t2_seq = chrono::high_resolution_clock::now();
+  auto delta = chrono::duration_cast<chrono::microseconds>(t2_seq - t1_seq).count();
+  cout << "Sequential adding: " << delta << " microsecond" << endl; 
 
-  cout << a;
+  //cout << a;
 
-//  thread threads[NUMBER_THREADS];
-
-  //cout << this_thread::get_id() << endl;
+  //thread threads[NUMBER_THREADS];
 
    
 

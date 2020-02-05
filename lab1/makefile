@@ -1,2 +1,2 @@
 all:
-	g++ -o main Matrix.h Matrix.cpp main.cpp
+	g++ -o main Matrix.h Matrix.cpp main.cpp -std=c++11
