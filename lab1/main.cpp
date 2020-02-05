@@ -16,13 +16,15 @@ const int NUMBER_THREADS = 1;
 int main(){
   srand(time(NULL));
   
-  //Matrix a(10,10);
-  //Matrix b(10,10);
-  //Matrix c = a + b;
+  Matrix a(10,10);
+  Matrix b(10,10);
+  Matrix c = a + b;
 
-  thread threads[NUMBER_THREADS];
+  cout << a;
 
-  cout << this_thread::get_id() << endl;
+//  thread threads[NUMBER_THREADS];
+
+  //cout << this_thread::get_id() << endl;
 
    
 

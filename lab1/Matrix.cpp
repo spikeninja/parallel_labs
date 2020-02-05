@@ -11,7 +11,7 @@ Matrix::Matrix(const int N, const int M){
   }
   for(int i = 0; i < N; i++){
     for(int j = 0; j < M; j++){
-      matrix[i][j] = rand() % 1000;
+      matrix[i][j] = rand() % 80 + 10;
     }
   }
 }
@@ -57,12 +57,40 @@ int** Matrix::getMatrix() const{
   return this->matrix;
 }
 
-Matrix Matrix::parallel_adding(const Matrix& m, int threads){
+void Matrix::parallel_addition(Matrix& result, Matrix& m1, Matrix& m2, int threads, int lower_bound, int upper_bound){
+  for(size_t i = lower_bound; i < upper_bound; i++){
+    for(int j = 0; j < result.M; j++){
+      result.matrix[i][j] = m1.matrix[i][j] + m2.matrix[i][j];
+    }
+  } 
+}
+
+
+
+
+/*
+auto range = size(first_vec) / threads;
   for(int i = 0; i < threads; i++){
+    auto start = i * range;
+    auto firstBegin = begin(second_vec) + start;
+    auto secondBegin = begin(second_vec) + start;
+    auto resultBegin = begin(parallel_result) + start;
+
+    auto firstEnd = firstBegin + range;
+    threads.emplace_back(
+      [firstBegin, firstEnd, secondBegin, resultBegin]()
+      {
+        std::transform(firstBegin, firstEnd, secondBegin, resultBegin, plus<int>());
+      }
+    )
+  } 
+
+for(int i = 0; i < threads; i++){
     for(int j = i; j < i+threads; j++){
-      for(int k = 0; k < m.M; k++){
+      for(int k = 0; k < m1.M; k++){
         this->matrix[j][k] += m.matrix[j][k];
       }
     }
   }
-}
+
+*/
