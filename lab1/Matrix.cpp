@@ -57,7 +57,7 @@ int** Matrix::getMatrix() const{
   return this->matrix;
 }
 
-void Matrix::parallel_addition(Matrix& result, Matrix& m1, Matrix& m2, int threads, int lower_bound, int upper_bound){
+void Matrix::parallel_addition(Matrix& result, const Matrix& m1, const Matrix& m2, int lower_bound, int upper_bound){
   for(size_t i = lower_bound; i < upper_bound; i++){
     for(int j = 0; j < result.M; j++){
       result.matrix[i][j] = m1.matrix[i][j] + m2.matrix[i][j];

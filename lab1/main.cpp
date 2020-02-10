@@ -31,7 +31,7 @@ int main(){
   chrono::time_point <chrono::system_clock> t1_par = chrono::high_resolution_clock::now();
 
   for(int i = 0; i < NUM_OF_THREADS; i++){
-    threads.push_back(thread(d.parallel_addition,d,a,b,i * (N / NUM_OF_THREADS),(i + 1) * (N / NUM_OF_THREADS)));
+    threads.push_back(thread(&Matrix::parallel_addition,ref(d),ref(a),ref(b),i * (N / NUM_OF_THREADS),(i + 1) * (N / NUM_OF_THREADS)));
   }
 
   for(auto &thread : threads){
@@ -39,8 +39,8 @@ int main(){
   }
 
   chrono::time_point <chrono::system_clock> t2_par = chrono::high_resolution_clock::now();
-  auto duration_par = std::chrono::duration_cast<std::chrono::microseconds>(t2_par - t1_par).count();
-  std::cout << "Parallel (" << NUM_OF_THREADS << " threads) addition of vectors - execution time: " << duration_par << "us" << std::endl;
+  auto delta_par = std::chrono::duration_cast<std::chrono::microseconds>(t2_par - t1_par).count();
+  cout << "Parallel adding: " << delta_par << " microsecond" << endl; 
    
 
   return 0;
