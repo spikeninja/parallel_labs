@@ -12,6 +12,13 @@ const int M = 10;
 
 const int NUM_OF_THREADS = 1;
 
+void parallel_addition(Matrix& result, const Matrix& m1, const Matrix& m2, int lower_bound, int upper_bound){
+  for(size_t i = lower_bound; i < upper_bound; i++){
+    for(int j = 0; j < result.M; j++){
+      result.matrix[i][j] = m1.matrix[i][j] + m2.matrix[i][j];
+    }
+  } 
+}
 
 int main(){
   srand(time(NULL));
@@ -31,7 +38,7 @@ int main(){
   chrono::time_point <chrono::system_clock> t1_par = chrono::high_resolution_clock::now();
 
   for(int i = 0; i < NUM_OF_THREADS; i++){
-    threads.push_back(thread(&Matrix::parallel_addition,ref(d),ref(a),ref(b),i * (N / NUM_OF_THREADS),(i + 1) * (N / NUM_OF_THREADS)));
+    threads.push_back(thread(parallel_addition,ref(d),ref(a),ref(b),i * (N / NUM_OF_THREADS),(i + 1) * (N / NUM_OF_THREADS)));
   }
 
   for(auto &thread : threads){
