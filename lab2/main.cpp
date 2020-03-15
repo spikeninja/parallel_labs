@@ -96,9 +96,7 @@ void action(CPU &c, Process &p){
   c.takeProcess(p);
 }
 
-void stub(){
-
-}
+void stub(){}
 
 int main(){
   srand(time(NULL));
@@ -120,7 +118,7 @@ int main(){
   float processed[3] = {0.0};
 
   thread threads[3];
-  
+
 // all go to CPU1
   for(int j = 0; j < 100; j++){
     counts[0]++;
@@ -132,8 +130,8 @@ int main(){
     }else{
       threads[0] = thread(stub);
     }
-    if(!cpu1.isBusy()){
-      threads[1] = thread(action, ref(cpu1), ref(p2));
+    if(!cpu2.isBusy()){
+      threads[1] = thread(action, ref(cpu2), ref(p2));
       processed[1]++;
     }else{
       threads[1] = thread(stub);
@@ -187,6 +185,10 @@ int main(){
   cout << endl;
   printArray(processed, 3);
   cout << endl;
+
+  cout << "P1 destroyed percent: " << (100 - processed[0])/counts[0] << endl;
+  cout << "P2 destroyed percent: " << (100 - processed[1])/counts[1] << endl;
+  cout << "P3 destroyed percent: " << (100 - processed[2])/counts[2] << endl;
 
   return 0;
 }
