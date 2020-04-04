@@ -34,6 +34,12 @@ void min_elem_t(vector<int>& vec, atomic<int>& min, int idxStart, int idxStop){
   }
 }
 
+void xor_sum_t(vector<int>& vec, atomic<int>& xor_sum, int idxStart, int idxStop){
+  for(int i = idxStart; i <= idxStop; i++){
+      xor_sum ^= vec[i];
+  }
+}
+
 void vec_size(const vector<int>& vec, atomic<int>& vec_size){
   vec_size = 0;
   thread threads[3];
@@ -67,11 +73,17 @@ void min_elem(vector<int>& vec, atomic<int>& min){
   }
 }
 
-void sum_numbers(const vector<int>& vec, int idxStart, int idxEnd){
-  for(int i = idxStart; i <= idxEnd; i++){
-    //multiSum += vec[i];
+void xor_sum(vector<int>& vec, atomic<int>& xor_sum){
+  xor_sum = vec[0];
+  thread threads[3];
+  threads[0] = thread(xor_sum_t, ref(vec), ref(xor_sum), 0, vec.size()/3);
+  threads[1] = thread(xor_sum_t, ref(vec), ref(xor_sum), vec.size()/3+1, 2*vec.size()/3);
+  threads[2] = thread(xor_sum_t, ref(vec), ref(xor_sum), 2*vec.size()/3+1, vec.size()-1);
+  for(int i = 0; i < 3; i++){
+    threads[i].join();
   }
 }
+
 
 int main(){
   srand(time(NULL));
@@ -90,10 +102,13 @@ int main(){
   max_elem(vec, max);
   min_elem(vec, min);
   vec_size(vec, v_size);
+  xor_sum(vec, xor_num);
   
   cout << endl;
-  cout << max << " " << min << endl;
+  cout << "max_elem: " << max << endl;
+  cout << "min_elem: " << min << endl;
   cout << "v_size: " << v_size << " vec.size(): " << vec.size() << endl;
+  cout << "xor_sum: " << xor_num << endl;
 
   return 0;
 }
