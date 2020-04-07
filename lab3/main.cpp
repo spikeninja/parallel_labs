@@ -11,8 +11,11 @@ using namespace std;
 
 
 void vec_size_t(const vector<int>& vec, atomic<int>& vec_size, int idxStart, int idxStop){
+  int old_val, new_val;
   for(int i = idxStart; i <= idxStop; i++){
-    vec_size++;
+    old_val = vec_size.load(memory_order_relaxed);
+    new_val = old_val + 1;
+    vec_size.compare_exchange_strong(old_val, new_val);
   }
 }
 
@@ -35,8 +38,12 @@ void min_elem_t(vector<int>& vec, atomic<int>& min, int idxStart, int idxStop){
 }
 
 void xor_sum_t(vector<int>& vec, atomic<int>& xor_sum, int idxStart, int idxStop){
+  int old_val, new_val;
   for(int i = idxStart; i <= idxStop; i++){
-      xor_sum ^= vec[i];
+      old_val = xor_sum.load(memory_order_relaxed);
+      new_val = old_val ^ vec[i]; 
+      xor_sum.compare_exchange_strong(old_val, new_val);
+      //xor_sum ^= vec[i];
   }
 }
 
