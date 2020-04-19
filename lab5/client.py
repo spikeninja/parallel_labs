@@ -18,7 +18,7 @@ def recv_data():
                 #_thread.interrupt_main()
                 break
         else:
-                print("Received data: "), recv_data
+                print("Received data: " + recv_data.decode())
 
 def send_data():
     while True:
