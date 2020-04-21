@@ -10,22 +10,22 @@ def recv_data():
         except:
             #Handle the case when server process terminates
             print("Server closed connection, thread exiting.")
-            #_thread.interrupt_main()
+            #_thr
             break
         if not recv_data:
                 # Recv with no data, server closed connection
                 print("Server closed connection, thread exiting.")
-                #_thread.interrupt_main()
+                #_th
                 break
         else:
                 print("Received data: " + recv_data.decode())
 
 def send_data():
     while True:
-        send_data = str(input("Enter data to send (q or Q to quit):"))
+        send_data = str(input("Enter data to send:"))
         if send_data == "q" or send_data == "Q":
             client_socket.send(send_data.encode("utf8"))
-            #_thread.interrupt_main()
+            #_th
             break
         else:
             client_socket.send(send_data.encode("utf8"))
