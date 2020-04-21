@@ -3,7 +3,7 @@ import select
 import string
 
 def broadcast_data (sock, message, sockets, server_socket):
-# відсилає повідомлення message усім клієнтам приєднаним до чата
+# broadcast data to all connected sockets
     for socket in sockets:
         if socket != server_socket and socket != sock:
             socket.send(message)
@@ -34,7 +34,7 @@ def main():
                 broadcast_data(sockfd, f"Client ({addr}, {addr}) connected".encode("utf8"), CONNECTION_LIST, server_socket)
 
             else:
-                # дані отримані від клієнтів (їх треба обробити)
+                # process received data
                 try:
                     data = sock.recv(4096)
                 except:
